@@ -1,1 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>About AI Learning</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --background: #050509;
+    --surface: rgba(255, 255, 255, 0.055);
+    --surface-hover: rgba(255, 255, 255, 0.085);
+    --border: rgba(255, 255, 255, 0.12);
+    --text: #ffffff;
+    --muted: #a9a9b8;
+    --purple: #8b5cf6;
+    --blue: #06b6d4;
+    --shadow: rgba(0, 0, 0, 0.45);
+}
+
+body.light {
+    --background: #f7f8fc;
+    --surface: rgba(255, 255, 255, 0.82);
+    --surface-hover: rgba(255, 255, 255, 0.96);
+    --border: rgba(0, 0, 0, 0.08);
+    --text: #171722;
+    --muted: #626270;
+    --shadow: rgba(0, 0, 0, 0.12);
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Background atmosphere */
+
+.background-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.glow-one {
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    top: -160px;
+    left: -100px;
+    background: #7c3aed;
+    filter: blur(150px);
+    opacity: 0.18;
+}
+
+.glow-two {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    right: -120px;
+    bottom: -120px;
+    background: #06b6d4;
+    filter: blur(150px);
+    opacity: 0.14;
+}
+
+/* Header */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border);
+    background: rgba(5, 5, 9, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+body.light header {
+    background: rgba(247, 248, 252, 0.78);
+}
+
+.navbar {
+    width: min(1150px, 100%);
+    margin: auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.brand img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 9px 15px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--purple);
+}
+
+/* Main */
+
+main {
+    width: 100%;
+}
+
+/* Hero */
+
+.hero {
+    width: min(1000px, 100%);
+    margin: auto;
+    padding: 90px 20px 70px;
+    text-align: center;
+}
+
+.logo-stage {
+    width: 190px;
+    height: 190px;
+    margin: 0 auto 35px;
+    position: relative;
+    animation: gentleFloat 4.5s ease-in-out infinite;
+}
+
+.logo-stage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 35px var(--shadow));
+}
+
+/* Elegant star motion */
+
+.logo-stage::after {
+    content: "★";
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    color: #a855f7;
+    font-size: 25px;
+    text-shadow:
+        0 0 8px #8b5cf6,
+        0 0 20px #8b5cf6;
+    transform-origin: 0 88px;
+    animation: starJourney 5.5s ease-in-out infinite;
+}
+
+@keyframes starJourney {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    70% {
+        transform: rotate(360deg);
+    }
+
+    82% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes gentleFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.hero-label {
+    display: inline-block;
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.hero h1 {
+    max-width: 850px;
+    margin: auto;
+    font-size: clamp(40px, 7vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -3px;
+}
+
+.gradient-text {
+    background: linear-gradient(
+        90deg,
+        #a855f7,
+        #6366f1,
+        #06b6d4
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-description {
+    max-width: 700px;
+    margin: 25px auto 0;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+/* Buttons */
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.primary-button,
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 13px 22px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.3s ease;
+}
+
+.primary-button {
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #06b6d4
+    );
+    box-shadow:
+        0 12px 35px rgba(124, 58, 237, 0.24);
+}
+
+.secondary-button {
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+    transform: translateY(-3px);
+}
+
+/* General sections */
+
+.section {
+    width: min(1150px, 100%);
+    margin: auto;
+    padding: 80px 20px;
+}
+
+.section-heading {
+    max-width: 720px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.section-heading h2 {
+    font-size: clamp(31px, 5vw, 48px);
+    line-height: 1.15;
+    margin-bottom: 15px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+/* Vision */
+
+.vision-card {
+    padding: 55px 35px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124, 58, 237, 0.13),
+            rgba(6, 182, 212, 0.08)
+        );
+    box-shadow: 0 25px 60px var(--shadow);
+}
+
+.vision-card h2 {
+    font-size: clamp(30px, 5vw, 48px);
+    margin-bottom: 20px;
+}
+
+.vision-card p {
+    max-width: 750px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 17px;
+}
+
+/* Feature cards */
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.feature-card {
+    position: relative;
+    padding: 32px;
+    min-height: 250px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--surface);
+    backdrop-filter: blur(15px);
+    transition: 0.35s ease;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    top: -60px;
+    right: -60px;
+    background: var(--purple);
+    filter: blur(55px);
+    opacity: 0.18;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    background: var(--surface-hover);
+    border-color: rgba(139, 92, 246, 0.45);
+}
+
+.feature-number {
+    color: var(--purple);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.feature-card h3 {
+    font-size: 22px;
+    margin-bottom: 14px;
+}
+
+.feature-card p {
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+/* AI Teacher */
+
+.teacher-section {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+    gap: 70px;
+}
+
+.teacher-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.teacher-visual::before {
+    content: "";
+    position: absolute;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #06b6d4
+    );
+    filter: blur(80px);
+    opacity: 0.22;
+}
+
+.teacher-visual img {
+    position: relative;
+    width: min(360px, 90vw);
+    object-fit: contain;
+    filter: drop-shadow(
+        0 25px 45px var(--shadow)
+    );
+    animation: teacherFloat 5s ease-in-out infinite;
+}
+
+@keyframes teacherFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-13px);
+    }
+}
+
+.teacher-content h2 {
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1.1;
+    margin-bottom: 22px;
+}
+
+.teacher-content p {
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 18px;
+}
+
+.status-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 12px #22c55e;
+}
+
+/* AI School */
+
+.school-card {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: center;
+    gap: 55px;
+    padding: 35px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: var(--surface);
+    backdrop-filter: blur(15px);
+}
+
+.school-image {
+    position: relative;
+}
+
+.school-image::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 22px;
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    pointer-events: none;
+}
+
+.school-image img {
+    width: 100%;
+    max-width: 420px;
+    display: block;
+    margin: auto;
+    border-radius: 22px;
+}
+
+.school-content h2 {
+    font-size: clamp(32px, 5vw, 50px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.school-content p {
+    color: var(--muted);
+    line-height: 1.9;
+}
+
+/* Final CTA */
+
+.final-section {
+    width: min(1000px, 100%);
+    margin: auto;
+    padding: 80px 20px 100px;
+}
+
+.final-card {
+    padding: 60px 30px;
+    text-align: center;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124, 58, 237, 0.14),
+            rgba(6, 182, 212, 0.08)
+        );
+}
+
+.final-card h2 {
+    font-size: clamp(32px, 5vw, 50px);
+    margin-bottom: 17px;
+}
+
+.final-card p {
+    max-width: 650px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+/* Footer */
+
+footer {
+    border-top: 1px solid var(--border);
+    padding: 35px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin-bottom: 18px;
+}
+
+.footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--purple);
+}
+
+/* Responsive */
+
+@media (max-width: 850px) {
+
+    .feature-grid,
+    .teacher-section,
+    .school-card {
+        grid-template-columns: 1fr;
+    }
+
+    .teacher-section,
+    .school-card {
+        text-align: center;
+    }
+
+    .teacher-visual {
+        order: 0;
+    }
+
+    .school-image img {
+        max-width: 330px;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .navbar {
+        padding: 12px 14px;
+    }
+
+    .brand span {
+        display: none;
+    }
+
+    .nav-button {
+        padding: 8px 11px;
+        font-size: 12px;
+    }
+
+    .hero {
+        padding: 65px 18px 50px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .section {
+        padding: 60px 18px;
+    }
+
+    .feature-card {
+        min-height: auto;
+    }
+
+    .school-card {
+        padding: 22px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="background-glow">
+    <div class="glow-one"></div>
+    <div class="glow-two"></div>
+</div>
+
+
+<header>
+
+<nav class="navbar">
+
+<a href="index.html" class="brand">
+
+<img
+src="IMG_20260623_215331%20(2).png"
+alt="AI Learning Logo">
+
+<span>AI Learning</span>
+
+</a>
+
+
+<div class="nav-actions">
+
+<a
+href="index.html"
+class="nav-button">
+
+Home
+
+</a>
+
+
+<button
+id="themeToggle"
+class="nav-button">
+
+Theme
+
+</button>
+
+</div>
+
+</nav>
+
+</header>
+
+
+<main>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+
+<div class="logo-stage">
+
+<img
+src="IMG_20260623_215331%20(2).png"
+alt="AI Learning Logo">
+
+</div>
+
+
+<div class="hero-label">
+
+About the AI Learning Platform
+
+</div>
+
+
+<h1>
+
+The Future of Learning
+Starts with
+
+<span class="gradient-text">
+AI Learning
+</span>
+
+</h1>
+
+
+<p class="hero-description">
+
+AI Learning is being built with a simple vision:
+to make learning more intelligent, more personal,
+and more engaging through the power of artificial intelligence.
+
+</p>
+
+
+<div class="button-row">
+
+<a
+href="index.html"
+class="primary-button">
+
+Return to Home
+
+</a>
+
+</div>
+
+
+</section>
+
+
+<!-- VISION -->
+
+<section class="section">
+
+
+<div class="vision-card">
+
+<h2>
+
+A New Way to
+<span class="gradient-text">
+Learn
+</span>
+
+</h2>
+
+
+<p>
+
+AI Learning brings together intelligent technology
+and education to create a learning experience designed
+around the needs of students. Our goal is to help learners
+ask questions, understand difficult concepts, explore knowledge,
+and continue growing at their own pace.
+
+</p>
+
+</div>
+
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="section">
+
+
+<div class="section-heading">
+
+<h2>
+
+Built Around the
+<span class="gradient-text">
+Learner
+</span>
+
+</h2>
+
+
+<p>
+
+AI Learning is designed to bring intelligent educational
+tools together in one connected experience.
+
+</p>
+
+</div>
+
+
+<div class="feature-grid">
+
+
+<div class="feature-card">
+
+<div class="feature-number">
+01
+</div>
+
+<h3>
+Personal AI Teacher
+</h3>
+
+<p>
+
+A personal intelligent learning companion designed
+to help students ask questions, understand topics,
+and receive helpful explanations.
+
+</p>
+
+</div>
+
+
+<div class="feature-card">
+
+<div class="feature-number">
+02
+</div>
+
+<h3>
+Intelligent Learning
+</h3>
+
+<p>
+
+A smarter approach to discovering information,
+exploring ideas, and developing knowledge with
+the support of artificial intelligence.
+
+</p>
+
+</div>
+
+
+<div class="feature-card">
+
+<div class="feature-number">
+03
+</div>
+
+<h3>
+AI School
+</h3>
+
+<p>
+
+A connected digital school experience designed
+to bring students and intelligent educational
+technology together.
+
+</p>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+<!-- AI TEACHER -->
+
+<section class="section">
+
+
+<div class="teacher-section">
+
+
+<div class="teacher-visual">
+
+<img
+src="IMG_20260703_070442%20(4).png"
+alt="AI Teacher Robot">
+
+</div>
+
+
+<div class="teacher-content">
+
+
+<h2>
+
+Meet Your
+<span class="gradient-text">
+AI Teacher
+</span>
+
+</h2>
+
+
+<p>
+
+The AI Teacher is designed to become a personal
+learning companion that students can interact with
+as they learn.
+
+</p>
+
+
+<p>
+
+Our vision is to make the experience feel natural,
+helpful, and engaging. As the platform develops,
+the AI Teacher will gain voice interaction and
+other intelligent capabilities.
+
+</p>
+
+
+<div class="status-box">
+
+<span class="status-dot"></span>
+
+AI Teacher technology is evolving
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+<!-- AI SCHOOL -->
+
+<section class="section">
+
+
+<div class="school-card">
+
+
+<div class="school-image">
+
+<img
+src="file_000000007f2c722f86c809dcfece5af1%20(1)%20(1).png"
+alt="AI School">
+
+</div>
+
+
+<div class="school-content">
+
+
+<h2>
+
+Welcome to
+<span class="gradient-text">
+AI School
+</span>
+
+</h2>
+
+
+<p>
+
+AI School represents the next step in the AI Learning
+vision: creating a digital learning environment where
+students can access educational experiences and
+AI-powered tools in one connected platform.
+
+</p>
+
+
+<div class="button-row">
+
+<a
+href="index.html"
+class="secondary-button">
+
+Explore AI Learning
+
+</a>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+<!-- FINAL CTA -->
+
+<section class="final-section">
+
+
+<div class="final-card">
+
+
+<h2>
+
+Learning is just
+the beginning.
+
+</h2>
+
+
+<p>
+
+AI Learning is being built for students who want
+to discover more, understand more, and become more.
+The journey is only beginning.
+
+</p>
+
+
+<div class="button-row">
+
+
+<a
+href="index.html"
+class="primary-button">
+
+Back to Home
+
+</a>
+
+
+<a
+href="https://whatsapp.com/channel/0029VbDRG3XIN9iljLne3K2z"
+target="_blank"
+class="secondary-button">
+
+Join the AI Learning Community
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+
+<div class="footer-links">
+
+
+<a href="index.html">
+Home
+</a>
+
+
+<a href="about.html">
+About AI Learning
+</a>
+
+
+<a
+href="https://whatsapp.com/channel/0029VbDRG3XIN9iljLne3K2z"
+target="_blank">
+
+WhatsApp Channel
+
+</a>
+
+
+</div>
+
+
+<p>
+
+© 2026 AI Learning. Learn smarter. Grow faster.
+
+</p>
+
+
+</footer>
+
+
+<script>
+
+/* Theme */
+
+const themeToggle =
+document.getElementById("themeToggle");
+
+
+function updateThemeButton() {
+
+if (
+document.body.classList.contains("light")
+) {
+
+themeToggle.textContent = "Dark";
+
+} else {
+
+themeToggle.textContent = "Light";
+
+}
+
+}
+
+
+themeToggle.addEventListener(
+"click",
+function() {
+
+document.body.classList.toggle("light");
+
+
+if (
+document.body.classList.contains("light")
+) {
+
+localStorage.setItem(
+"theme",
+"light"
+);
+
+} else {
+
+localStorage.setItem(
+"theme",
+"dark"
+);
+
+}
+
+
+updateThemeButton();
+
+});
+
+
+/* Remember theme */
+
+if (
+localStorage.getItem("theme")
+===
+"light"
+) {
+
+document.body.classList.add("light");
+
+}
+
+
+updateThemeButton();
+
+</script>
+
+
+</body>
+  </html>
