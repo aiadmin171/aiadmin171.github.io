@@ -449,78 +449,143 @@ AI Learning — Intelligent Learning for a Better Future
 
 </footer>
 
-
 <script>
+const talkButton = document.getElementById("talkButton");
+const micButton = document.getElementById("micButton");
+const status = document.getElementById("status");
+const responseBox = document.getElementById("responseBox");
+const teacherRobot = document.getElementById("teacherRobot");
 
-/*
-Stage 3 foundation.
+let recognition;
+let isListening = false;
 
-The AI API will be connected here later.
+/* Check browser speech recognition support */
 
-The API key placeholder will be added
-in the API connection stage.
-*/
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
 
-const talkButton =
-document.getElementById("talkButton");
+if (SpeechRecognition) {
 
-const micButton =
-document.getElementById("micButton");
+    recognition = new SpeechRecognition();
 
-const status =
-document.getElementById("status");
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = "en-US";
 
-const responseBox =
-document.getElementById("responseBox");
+    recognition.onstart = function() {
 
-const teacherRobot =
-document.getElementById("teacherRobot");
+        isListening = true;
+
+        micButton.classList.add("listening");
+
+        status.textContent =
+            "I'm listening. Please ask your question.";
+
+    };
+
+    recognition.onresult = function(event) {
+
+        const question =
+            event.results[0][0].transcript;
+
+        responseBox.textContent =
+            "You asked: " + question;
+
+        status.textContent =
+            "Your question has been received.";
+
+        /*
+        The next step will send this question
+        to the AI API.
+        */
+
+        console.log(
+            "Student question:",
+            question
+        );
+
+    };
+
+    recognition.onerror = function(event) {
+
+        status.textContent =
+            "I couldn't hear you clearly. Please try again.";
+
+        console.log(
+            "Voice recognition error:",
+            event.error
+        );
+
+    };
+
+    recognition.onend = function() {
+
+        isListening = false;
+
+        micButton.classList.remove("listening");
+
+    };
+
+} else {
+
+    status.textContent =
+        "Voice input is not supported by this browser.";
+
+}
 
 
-talkButton.addEventListener(
-"click",
-function() {
-
-status.textContent =
-"AI Teacher voice system is ready to be connected.";
-
-responseBox.textContent =
-"The AI Teacher will respond here after the AI API is connected.";
-
-});
-
+/* Microphone button */
 
 micButton.addEventListener(
-"click",
-function() {
+    "click",
+    function() {
 
-status.textContent =
-"Voice input will be connected in the next step.";
+        if (!recognition) {
+            return;
+        }
 
-micButton.classList.toggle(
-"listening"
+        if (isListening) {
+
+            recognition.stop();
+
+            return;
+
+        }
+
+        responseBox.textContent =
+            "Listening...";
+
+        recognition.start();
+
+    }
 );
 
-});
 
+/* Talk button */
 
-/*
-Future speaking state.
+talkButton.addEventListener(
+    "click",
+    function() {
 
-When the AI Teacher speaks,
-we will activate:
+        if (!recognition) {
 
-teacherRobot.classList.add("talking");
+            status.textContent =
+                "Voice input is not supported by this browser.";
 
-When speaking stops:
+            return;
 
-teacherRobot.classList.remove("talking");
+        }
 
-The real mouth/lip-sync system
-will be added in Stage 4.
-*/
+        responseBox.textContent =
+            "Tap the microphone and ask your question.";
 
+        status.textContent =
+            "Ready to listen.";
+
+    }
+);
 </script>
-
+    
 </body>
   </html>
