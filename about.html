@@ -28,7 +28,27 @@ html {
     --blue: #06b6d4;
     --shadow: rgba(0, 0, 0, 0.45);
 }
+.school-card {
+    max-width: 1100px;
+    margin: 0 auto;
+}
 
+.school-image img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .school-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 25px;
+        padding: 25px;
+    }
+}
 body.light {
     --background: #f7f8fc;
     --surface: rgba(255, 255, 255, 0.82);
@@ -988,45 +1008,55 @@ AI Teacher technology is evolving
 
 
 </section>
-
 <!-- AI SCHOOL -->
+
 <section id="ai-school">
 
-    <div class="school-card">
+<div class="school-card">
 
-        <div>
+<div class="school-image">
+<img
+  src="file_000000007f2c722f86c809dcfece5af1%20(1)%20(1).png"
+  alt="AI School"
+>
+</div>
 
-            <img
-                src="file_000000007f2c722f86c809dcfece5af1%20(1)%20(1).png" alt="AI School"
-            >
+<div>
 
-        </div>
+<h2>
 
+Welcome to
+<span class="gradient-text">
+AI School
+</span>
+</h2>
 
-        <div>
+<p>
 
-            <h2>
-                Welcome to
-                <span class="gradient-text">AI School</span>
-            </h2>
+AI School represents the next step in the AI Learning
+vision: creating a digital learning environment where
+students can access educational experiences and
+AI-powered tools in one connected platform.
 
-            <p>
-                AI School represents the next step in the AI Learning
-                vision: creating a digital learning environment where
-                students can access educational experiences and
-                AI-powered tools in one connected platform.
-            </p>
+</p>
 
-            <button class="primary-btn">
-                 Explore AI Learning
-            </button>
+<div class="button-row">
 
-        </div>
+<a
+href="index.html"
+class="secondary-button"
+>
 
-    </div>
+Explore AI Learning
+
+</a>
+
+</div>
+</div>
+
+</div>
 
 </section>
-
 
     
 
