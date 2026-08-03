@@ -28,18 +28,6 @@ html {
     --blue: #06b6d4;
     --shadow: rgba(0, 0, 0, 0.45);
 }
-.school-card {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.school-image img {
-    width: 100%;
-    max-width: 220px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
 
 @media (max-width: 768px) {
     .school-card {
@@ -540,6 +528,8 @@ main {
     border-radius: 30px;
     background: var(--surface);
     backdrop-filter: blur(15px);
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 .school-image {
@@ -551,13 +541,13 @@ main {
     position: absolute;
     inset: 12px;
     border-radius: 22px;
-    border: 1px solid rgba(139, 92, 246, 0.35);
+    border: 0px solid rgba(139, 92, 246, 0.35);
     pointer-events: none;
 }
 
 .school-image img {
     width: 100%;
-    max-width: 420px;
+    max-width: 360px;
     display: block;
     margin: auto;
     border-radius: 22px;
@@ -579,7 +569,7 @@ main {
 .final-section {
     width: min(1000px, 100%);
     margin: auto;
-    padding: 80px 20px 100px;
+    padding: 50px 20px 60px;
 }
 
 .final-card {
