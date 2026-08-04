@@ -519,62 +519,63 @@ h1 {
         rgba(124,58,237,.6);
 }
 
-
 /* MOUTH / LIP SYNC EFFECT */
 
-.mouth-system {
+.robot-container {
+    position: relative;
+}
 
-    width: 90px;
+.mouth-overlay {
+    position: absolute;
 
-    height: 25px;
+    /* We will adjust these two values if needed */
+    left: 50%;
+    top: 57%;
 
-    margin:
-        15px auto 0;
+    width: 32px;
+    height: 10px;
+
+    transform: translate(-50%, -50%);
 
     border-radius: 50%;
 
-    background:
-        rgba(139,92,246,.12);
+    background: #1b1025;
 
     opacity: 0;
 
-    transform:
-        scale(.7);
-
     transition:
-        .2s ease;
+        opacity .15s ease,
+        height .15s ease,
+        width .15s ease;
+
+    z-index: 5;
 }
 
-.mouth-system.talking {
 
+/* Mouth moves while AI is speaking */
+
+.mouth-overlay.talking {
     opacity: 1;
 
-    transform:
-        scale(1);
-
     animation:
-        mouthMove .18s
-        ease-in-out
-        infinite alternate;
+        lipSync .16s ease-in-out infinite alternate;
 }
 
-@keyframes mouthMove {
+
+@keyframes lipSync {
 
     from {
-
-        height: 10px;
-
-        transform:
-            scaleX(.7);
+        width: 24px;
+        height: 6px;
+        border-radius: 50%;
     }
 
     to {
-
-        height: 28px;
-
-        transform:
-            scaleX(1);
+        width: 34px;
+        height: 18px;
+        border-radius: 40%;
     }
+
 }
 
 
@@ -794,7 +795,7 @@ id="micButton"
 class="mic-button"
 title="Start speaking">
 
-🎤
+MIC
 
 </button>
 
@@ -852,9 +853,9 @@ const teacherRobot =
         "teacherRobot"
     );
 
-const mouthSystem =
+const mouthOverlay =
     document.getElementById(
-        "mouthSystem"
+        "mouthOverlay"
     );
 
 const themeButton =
@@ -1121,41 +1122,34 @@ function speakAnswer(
 
 
     speech.onstart =
-        function() {
+    function() {
 
-            teacherRobot.classList.add(
-                "talking"
-            );
+        teacherRobot.classList.add(
+            "talking"
+        );
 
-            mouthSystem.classList.add(
-                "talking"
-            );
+        mouthOverlay.classList.add(
+            "talking"
+        );
 
-        };
-
-
-    speech.onend =
-        function() {
-
-            teacherRobot.classList.remove(
-                "talking"
-            );
-
-            mouthSystem.classList.remove(
-                "talking"
-            );
-
-            status.textContent =
-                "Ready to learn with you.";
-
-        };
+    };
 
 
-    window.speechSynthesis.speak(
-        speech
-    );
+     speech.onend =
+    function() {
 
-}
+        teacherRobot.classList.remove(
+            "talking"
+        );
+
+        mouthOverlay.classList.remove(
+            "talking"
+        );
+
+        status.textContent =
+            "Ready to learn with you.";
+
+    };
 
 
 /* MICROPHONE */
