@@ -13,27 +13,66 @@
     box-sizing: border-box;
 }
 
+:root {
+    --bg: #050509;
+    --text: #ffffff;
+    --muted: #a9a9b8;
+    --card: rgba(255,255,255,.06);
+    --border: rgba(255,255,255,.12);
+    --header: rgba(5,5,9,.75);
+}
+
+body.light {
+    --bg: #f5f7ff;
+    --text: #171725;
+    --muted: #5f6272;
+    --card: rgba(255,255,255,.75);
+    --border: rgba(0,0,0,.12);
+    --header: rgba(245,247,255,.8);
+}
+
 body {
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
-    color: white;
+    color: var(--text);
+
     background:
-        radial-gradient(circle at 20% 10%, rgba(124,58,237,.25), transparent 35%),
-        radial-gradient(circle at 90% 80%, rgba(6,182,212,.18), transparent 35%),
-        #050509;
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(124,58,237,.25),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(6,182,212,.18),
+            transparent 35%
+        ),
+        var(--bg);
+
     overflow-x: hidden;
+    transition: background .4s ease, color .4s ease;
 }
+
+/* HEADER */
 
 header {
     padding: 15px 20px;
-    border-bottom: 1px solid rgba(255,255,255,.1);
-    background: rgba(5,5,9,.7);
+
+    border-bottom: 1px solid var(--border);
+
+    background: var(--header);
+
     backdrop-filter: blur(18px);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .navbar {
     max-width: 1100px;
     margin: auto;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -43,29 +82,58 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+
+    color: var(--text);
+
     text-decoration: none;
+
     font-weight: bold;
 }
 
 .brand img {
     width: 42px;
     height: 42px;
+
     object-fit: contain;
 }
 
-.home-btn {
-    padding: 10px 16px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,.15);
-    color: white;
-    background: rgba(255,255,255,.06);
-    text-decoration: none;
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+
+.home-btn,
+.theme-btn {
+    padding: 10px 14px;
+
+    border-radius: 12px;
+
+    border: 1px solid var(--border);
+
+    color: var(--text);
+
+    background: var(--card);
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.home-btn:hover,
+.theme-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* MAIN */
 
 main {
     max-width: 1000px;
+
     margin: auto;
+
     padding: 55px 20px 80px;
 }
 
@@ -75,17 +143,25 @@ main {
 
 .badge {
     display: inline-block;
+
     padding: 8px 15px;
+
     border: 1px solid rgba(139,92,246,.35);
+
     border-radius: 50px;
+
     color: #c4b5fd;
+
     background: rgba(139,92,246,.08);
+
     font-size: 13px;
+
     margin-bottom: 18px;
 }
 
 h1 {
     font-size: clamp(40px, 8vw, 70px);
+
     margin-bottom: 15px;
 }
 
@@ -96,72 +172,94 @@ h1 {
         #6366f1,
         #06b6d4
     );
+
     -webkit-background-clip: text;
     background-clip: text;
+
     color: transparent;
 }
 
 .intro {
     max-width: 650px;
+
     margin: auto;
-    color: #a9a9b8;
+
+    color: var(--muted);
+
     line-height: 1.8;
 }
 
-/* Teacher */
+/* TEACHER AREA */
 
 .teacher-area {
     margin: 45px auto 0;
+
     max-width: 700px;
+
     text-align: center;
 }
 
+/* ROBOT */
+
 .robot-container {
     position: relative;
+
     width: 320px;
     height: 320px;
+
     margin: auto;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
 }
 
 .robot-container::before {
     content: "";
+
     position: absolute;
+
     width: 240px;
     height: 240px;
+
     border-radius: 50%;
+
     background: linear-gradient(
         135deg,
         #7c3aed,
         #06b6d4
     );
+
     filter: blur(75px);
+
     opacity: .25;
 }
 
-.robot {
+.robot-wrapper {
     position: relative;
+
     width: 290px;
+
     max-width: 90vw;
+
+    animation: floatRobot 2.5s ease-in-out infinite;
+}
+
+.robot {
+    display: block;
+
+    width: 100%;
+
     object-fit: contain;
-    filter: drop-shadow(
-        0 25px 40px rgba(0,0,0,.55)
-    );
-    animation: floatRobot 4s ease-in-out infinite;
+
+    filter:
+        drop-shadow(
+            0 25px 40px rgba(0,0,0,.55)
+        );
 }
 
-/*
-This class will later be activated
-when the AI Teacher is speaking.
-*/
-
-.robot.talking {
-    animation:
-        floatRobot 4s ease-in-out infinite,
-        talkingGlow .8s ease-in-out infinite;
-}
+/* FASTER FLOATING */
 
 @keyframes floatRobot {
 
@@ -170,69 +268,175 @@ when the AI Teacher is speaking.
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-12px);
     }
+}
+
+/* SPEAKING GLOW */
+
+.robot-wrapper.talking .robot {
+    animation:
+        talkingGlow .8s ease-in-out infinite;
 }
 
 @keyframes talkingGlow {
 
     0%, 100% {
-        filter: drop-shadow(
-            0 25px 40px rgba(0,0,0,.55)
-        );
+        filter:
+            drop-shadow(
+                0 25px 40px rgba(0,0,0,.55)
+            );
     }
 
     50% {
-        filter: drop-shadow(
-            0 0 30px rgba(139,92,246,.8)
-        );
+        filter:
+            drop-shadow(
+                0 0 30px rgba(139,92,246,.8)
+            );
     }
 }
 
-/* Status */
+/* MOUTH */
+
+.mouth {
+    position: absolute;
+
+    /*
+    Mouth position is relative
+    to the robot image.
+
+    We can adjust these values
+    after testing the image.
+    */
+
+    left: 50%;
+
+    top: 62%;
+
+    transform: translate(-50%, -50%);
+
+    width: 42px;
+
+    height: 13px;
+
+    border-radius: 50%;
+
+    background: #111;
+
+    border: 2px solid rgba(255,255,255,.65);
+
+    opacity: 0;
+
+    transform-origin: center;
+
+    z-index: 5;
+}
+
+/* Mouth appears while speaking */
+
+.robot-wrapper.talking .mouth {
+
+    opacity: 1;
+
+    animation:
+        mouthTalk
+        .16s
+        ease-in-out
+        infinite alternate;
+}
+
+@keyframes mouthTalk {
+
+    from {
+        height: 5px;
+
+        transform:
+            translate(-50%, -50%)
+            scaleY(.7);
+    }
+
+    to {
+        height: 22px;
+
+        transform:
+            translate(-50%, -50%)
+            scaleY(1);
+    }
+}
+
+/* STATUS */
 
 .status {
     min-height: 28px;
+
     margin: 15px 0;
-    color: #a9a9b8;
+
+    color: var(--muted);
+
     font-size: 14px;
 }
 
-/* Response */
+/* RESPONSE */
 
 .response-box {
+
     min-height: 100px;
+
     margin: 20px auto;
+
     padding: 20px;
+
     max-width: 650px;
+
     border-radius: 20px;
-    border: 1px solid rgba(255,255,255,.1);
-    background: rgba(255,255,255,.05);
-    color: #d4d4df;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    color: var(--text);
+
     line-height: 1.7;
+
     text-align: left;
+
+    transition: .4s ease;
 }
 
-/* Talk button */
+/* TALK BUTTON */
 
 .talk-button {
+
     width: 100%;
+
     max-width: 360px;
+
     padding: 17px 25px;
+
     margin-top: 20px;
+
     border: none;
+
     border-radius: 16px;
+
     color: white;
+
     font-size: 16px;
+
     font-weight: bold;
+
     cursor: pointer;
+
     background: linear-gradient(
         135deg,
         #7c3aed,
         #06b6d4
     );
+
     box-shadow:
-        0 15px 35px rgba(124,58,237,.25);
+        0 15px 35px
+        rgba(124,58,237,.25);
+
     transition: .3s ease;
 }
 
@@ -244,48 +448,67 @@ when the AI Teacher is speaking.
     transform: scale(.98);
 }
 
-/* Microphone */
+/* MICROPHONE */
 
 .mic-button {
+
     width: 62px;
+
     height: 62px;
+
     margin-top: 18px;
+
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.15);
-    color: white;
-    background: rgba(255,255,255,.07);
+
+    border: 1px solid var(--border);
+
+    color: var(--text);
+
+    background: var(--card);
+
     font-size: 22px;
+
     cursor: pointer;
+
     transition: .3s ease;
 }
 
 .mic-button:hover {
+
     border-color: #8b5cf6;
+
     transform: scale(1.05);
 }
 
 .mic-button.listening {
+
     background: #7c3aed;
+
     box-shadow:
-        0 0 0 10px rgba(124,58,237,.12),
-        0 0 35px rgba(124,58,237,.6);
+
+        0 0 0 10px
+        rgba(124,58,237,.12),
+
+        0 0 35px
+        rgba(124,58,237,.6);
 }
 
-/* Future mouth system */
-
-.mouth-system {
-    display: none;
-}
-
-/* Footer */
+/* FOOTER */
 
 footer {
+
     padding: 25px;
+
     text-align: center;
-    border-top: 1px solid rgba(255,255,255,.08);
-    color: #777786;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted);
+
     font-size: 13px;
 }
+
+/* MOBILE */
 
 @media(max-width:600px) {
 
@@ -297,17 +520,32 @@ footer {
         display: none;
     }
 
+    .home-btn {
+        display: none;
+    }
+
     main {
-        padding: 45px 16px 60px;
+        padding:
+            45px 16px 60px;
     }
 
     .robot-container {
+
         width: 280px;
+
         height: 280px;
     }
 
-    .robot {
+    .robot-wrapper {
+
         width: 250px;
+    }
+
+    .mouth {
+
+        width: 36px;
+
+        height: 11px;
     }
 
 }
@@ -320,7 +558,9 @@ footer {
 
 <nav class="navbar">
 
-<a href="index.html" class="brand">
+<a
+href="index.html"
+class="brand">
 
 <img
 src="IMG_20260623_215331%20(2).png"
@@ -330,6 +570,8 @@ alt="AI Learning Logo">
 
 </a>
 
+<div class="nav-right">
+
 <a
 href="index.html"
 class="home-btn">
@@ -337,6 +579,16 @@ class="home-btn">
 Home
 
 </a>
+
+<button
+id="themeButton"
+class="theme-btn">
+
+☀️ Light
+
+</button>
+
+</div>
 
 </nav>
 
@@ -348,24 +600,31 @@ Home
 <section class="hero">
 
 <div class="badge">
+
 Personal AI Learning Companion
+
 </div>
+
 
 <h1>
 
 Meet Your
+
 <span class="gradient">
+
 AI Teacher
+
 </span>
 
 </h1>
+
 
 <p class="intro">
 
 Ask questions, explore ideas, and learn with your
 personal AI Teacher. Your intelligent learning
-companion is being built to make learning more
-interactive and engaging.
+companion is here to help you understand,
+practice, and grow.
 
 </p>
 
@@ -375,11 +634,22 @@ interactive and engaging.
 
 <div class="robot-container">
 
+<div
+id="robotWrapper"
+class="robot-wrapper">
+
 <img
 id="teacherRobot"
 class="robot"
-src="IMG_20260703_070442%20(4).png"
+src="IMG_20260703_070442%20(4)%20(1).png"
 alt="AI Teacher Robot">
+
+<div
+id="mouth"
+class="mouth">
+</div>
+
+</div>
 
 </div>
 
@@ -419,21 +689,9 @@ id="micButton"
 class="mic-button"
 title="Start speaking">
 
-Mic
+MIC
 
 </button>
-
-
-<!--
-The talking-mouth system will be connected
-after the AI voice system is working.
--->
-
-<div class="mouth-system">
-
-AI Teacher Lip Sync System
-
-</div>
 
 
 </div>
@@ -449,83 +707,198 @@ AI Learning — Intelligent Learning for a Better Future
 
 </footer>
 
+
 <script>
-const talkButton = document.getElementById("talkButton");
-const micButton = document.getElementById("micButton");
-const status = document.getElementById("status");
-const responseBox = document.getElementById("responseBox");
-const teacherRobot = document.getElementById("teacherRobot");
+
+/* ELEMENTS */
+
+const talkButton =
+    document.getElementById(
+        "talkButton"
+    );
+
+const micButton =
+    document.getElementById(
+        "micButton"
+    );
+
+const status =
+    document.getElementById(
+        "status"
+    );
+
+const responseBox =
+    document.getElementById(
+        "responseBox"
+    );
+
+const robotWrapper =
+    document.getElementById(
+        "robotWrapper"
+    );
+
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
+
+
+/* CLOUDFLARE WORKER */
+
+const BACKEND_URL =
+    "https://ai-learning-backend.aibuilder171.workers.dev";
+
+
+/* THEME SYSTEM */
+
+const savedTheme =
+    localStorage.getItem(
+        "aiLearningTheme"
+    );
+
+if (savedTheme === "light") {
+
+    document.body.classList.add(
+        "light"
+    );
+
+    themeButton.textContent =
+        "🌙 Dark";
+
+} else {
+
+    themeButton.textContent =
+        "☀️ Light";
+}
+
+
+themeButton.addEventListener(
+    "click",
+    function() {
+
+        document.body.classList.toggle(
+            "light"
+        );
+
+        const isLight =
+            document.body.classList.contains(
+                "light"
+            );
+
+        if (isLight) {
+
+            themeButton.textContent =
+                "🌙 Dark";
+
+            localStorage.setItem(
+                "aiLearningTheme",
+                "light"
+            );
+
+        } else {
+
+            themeButton.textContent =
+                "☀️ Light";
+
+            localStorage.setItem(
+                "aiLearningTheme",
+                "dark"
+            );
+
+        }
+
+    }
+);
+
+
+/* SPEECH RECOGNITION */
 
 let recognition;
+
 let isListening = false;
 
-/* Check browser speech recognition support */
 
 const SpeechRecognition =
     window.SpeechRecognition ||
     window.webkitSpeechRecognition;
 
+
 if (SpeechRecognition) {
 
-    recognition = new SpeechRecognition();
+    recognition =
+        new SpeechRecognition();
 
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = "en-US";
+    recognition.continuous =
+        false;
 
-    recognition.onstart = function() {
+    recognition.interimResults =
+        false;
 
-        isListening = true;
+    recognition.lang =
+        "en-US";
 
-        micButton.classList.add("listening");
 
-        status.textContent =
-            "I'm listening. Please ask your question.";
+    recognition.onstart =
+        function() {
 
-    };
+            isListening = true;
 
-    recognition.onresult = function(event) {
+            micButton.classList.add(
+                "listening"
+            );
 
-        const question =
-            event.results[0][0].transcript;
+            status.textContent =
+                "I'm listening. Please ask your question.";
 
-        responseBox.textContent =
-            "You asked: " + question;
+        };
 
-        status.textContent =
-            "Your question has been received.";
 
-        /*
-        The next step will send this question
-        to the AI API.
-        */
+    recognition.onresult =
+        function(event) {
 
-        console.log(
-            "Student question:",
-            question
-        );
+            const question =
+                event
+                    .results[0][0]
+                    .transcript;
 
-    };
+            responseBox.textContent =
+                "You asked: " +
+                question;
 
-    recognition.onerror = function(event) {
+            status.textContent =
+                "AI Teacher is thinking...";
 
-        status.textContent =
-            "I couldn't hear you clearly. Please try again.";
+            askAITeacher(
+                question
+            );
 
-        console.log(
-            "Voice recognition error:",
-            event.error
-        );
+        };
 
-    };
 
-    recognition.onend = function() {
+    recognition.onerror =
+        function(event) {
 
-        isListening = false;
+            status.textContent =
+                "I couldn't hear you clearly. Please try again.";
 
-        micButton.classList.remove("listening");
+            console.log(
+                "Voice recognition error:",
+                event.error
+            );
 
-    };
+        };
+
+
+    recognition.onend =
+        function() {
+
+            isListening = false;
+
+            micButton.classList.remove(
+                "listening"
+            );
+
+        };
 
 } else {
 
@@ -535,15 +908,193 @@ if (SpeechRecognition) {
 }
 
 
-/* Microphone button */
+/* ASK AI TEACHER */
+
+async function askAITeacher(
+    question
+) {
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND_URL,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            question:
+                                question
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.success &&
+            data.answer
+        ) {
+
+            responseBox.textContent =
+                data.answer;
+
+            status.textContent =
+                "AI Teacher is speaking...";
+
+            speakAIResponse(
+                data.answer
+            );
+
+        } else {
+
+            responseBox.textContent =
+                "Sorry, I couldn't get an answer right now.";
+
+            status.textContent =
+                "AI Teacher could not respond.";
+
+            console.log(
+                "Backend response:",
+                data
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Backend connection error:",
+            error
+        );
+
+        responseBox.textContent =
+            "I couldn't connect to the AI Teacher.";
+
+        status.textContent =
+            "Connection error.";
+
+    }
+
+}
+
+
+/* AI TEACHER VOICE */
+
+function speakAIResponse(
+    text
+) {
+
+    if (
+        !("speechSynthesis" in window)
+    ) {
+
+        status.textContent =
+            "AI Teacher answered, but voice is not supported.";
+
+        return;
+
+    }
+
+
+    window.speechSynthesis.cancel();
+
+
+    const speech =
+        new SpeechSynthesisUtterance(
+            text
+        );
+
+
+    speech.lang =
+        "en-US";
+
+    speech.rate =
+        0.95;
+
+    speech.pitch =
+        1.05;
+
+    speech.volume =
+        1;
+
+
+    speech.onstart =
+        function() {
+
+            robotWrapper.classList.add(
+                "talking"
+            );
+
+            status.textContent =
+                "AI Teacher is speaking...";
+
+        };
+
+
+    speech.onend =
+        function() {
+
+            robotWrapper.classList.remove(
+                "talking"
+            );
+
+            status.textContent =
+                "Ready to learn with you.";
+
+        };
+
+
+    speech.onerror =
+        function() {
+
+            robotWrapper.classList.remove(
+                "talking"
+            );
+
+            status.textContent =
+                "AI Teacher finished responding.";
+
+        };
+
+
+    window.speechSynthesis.speak(
+        speech
+    );
+
+}
+
+
+/* MICROPHONE BUTTON */
 
 micButton.addEventListener(
     "click",
     function() {
 
         if (!recognition) {
+
+            status.textContent =
+                "Voice input is not supported by this browser.";
+
             return;
+
         }
+
 
         if (isListening) {
 
@@ -553,8 +1104,12 @@ micButton.addEventListener(
 
         }
 
+
         responseBox.textContent =
             "Listening...";
+
+        status.textContent =
+            "Get ready to ask your question.";
 
         recognition.start();
 
@@ -562,7 +1117,7 @@ micButton.addEventListener(
 );
 
 
-/* Talk button */
+/* TALK BUTTON */
 
 talkButton.addEventListener(
     "click",
@@ -577,6 +1132,7 @@ talkButton.addEventListener(
 
         }
 
+
         responseBox.textContent =
             "Tap the microphone and ask your question.";
 
@@ -585,7 +1141,8 @@ talkButton.addEventListener(
 
     }
 );
+
 </script>
-    
+
 </body>
-  </html>
+</html>
