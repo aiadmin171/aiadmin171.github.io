@@ -1117,27 +1117,97 @@ micButton.addEventListener(
 );
 
 
-/* TALK BUTTON */
+const BACKEND_URL =
+    "https://ai-learning-backend.aibuilder171.workers.dev/";
+
 
 talkButton.addEventListener(
     "click",
-    function() {
+    async function() {
 
-        if (!recognition) {
+        const question =
+            prompt(
+                "What would you like to ask your AI Teacher?"
+            );
 
-            status.textContent =
-                "Voice input is not supported by this browser.";
-
+        if (!question) {
             return;
-
         }
 
+        status.textContent =
+            "AI Teacher is thinking...";
 
         responseBox.textContent =
-            "Tap the microphone and ask your question.";
+            "Please wait...";
 
-        status.textContent =
-            "Ready to listen.";
+
+        try {
+
+            const response =
+                await fetch(
+                    BACKEND_URL,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                question:
+                                    question
+
+                            })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (data.success) {
+
+                responseBox.textContent =
+                    data.answer;
+
+                status.textContent =
+                    "Your AI Teacher has answered.";
+
+            } else {
+
+                responseBox.textContent =
+                    "Sorry, I couldn't get an answer right now.";
+
+                status.textContent =
+                    "Something went wrong.";
+
+                console.log(
+                    data
+                );
+
+            }
+
+        } catch (error) {
+
+            responseBox.textContent =
+                "Sorry, I couldn't connect to the AI Teacher.";
+
+            status.textContent =
+                "Connection error.";
+
+            console.error(
+                error
+            );
+
+        }
 
     }
 );
